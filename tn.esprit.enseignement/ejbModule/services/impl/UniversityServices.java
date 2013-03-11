@@ -1,5 +1,7 @@
 package services.impl;
 
+import java.util.List;
+
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -44,7 +46,24 @@ public class UniversityServices implements UniversityServicesRemote {
 	@Override
 	public void fokkAlia() {
 		// TODO Auto-generated method stub
-		
+
+	}
+
+	@Override
+	public void assignProfsToModule(List<Prof> profs, Module module) {
+		module.linkProfsToModule(profs);
+		entityManager.merge(module);
+
+	}
+
+	@Override
+	public Prof findProfById(int i) {
+		return entityManager.find(Prof.class, i);
+	}
+
+	@Override
+	public Module findModuleById(int i) {
+		return entityManager.find(Module.class, i);
 	}
 
 }

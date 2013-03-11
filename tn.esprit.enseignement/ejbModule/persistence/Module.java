@@ -3,6 +3,7 @@ package persistence;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
@@ -51,13 +52,21 @@ public class Module implements Serializable {
 		this.marks = marks;
 	}
 
-	@OneToMany(mappedBy = "module")
+	@OneToMany(mappedBy = "module",cascade=CascadeType.MERGE)
 	public List<Prof> getProfs() {
 		return profs;
 	}
 
 	public void setProfs(List<Prof> profs) {
 		this.profs = profs;
+	}
+
+	public void linkProfsToModule(List<Prof> profs2) {
+		this.profs = profs2;
+		for (Prof p : profs2) {
+			p.setModule(this);
+		}
+
 	}
 
 }
